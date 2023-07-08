@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otus-homework-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: otus-homework-app
+  template:
+    metadata:
+      labels:
+        app: otus-homework-app
+    spec:
+      containers:
+        - name: otus-homework-app
+          image: dmkalinin/otus-homework:latest
+          ports:
+            - name: web
+              containerPort: 8000
+          livenessProbe:
+            httpGet:
+              port: 8000
+              path: /
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              port: 8000
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5

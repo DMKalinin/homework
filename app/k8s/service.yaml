@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: otus-homework-service
+spec:
+  selector:
+    app: otus-homework-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: web
+  type: ClusterIP
